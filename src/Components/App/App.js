@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
-import Table from "./Table";
+import Table from "../Table/Table";
+import "./App.css"
+import {divideDataToChunks} from "../helperFunctions";
 
 class App extends Component {
 	state = {
 		people: [],
+		universities: [],
 		isAllDataFetched: false
 	}
 	componentDidMount() {
-		this.fetchPeople("https://swapi.dev/api/people")
+		// this.fetchPeopleStarWars("https://swapi.dev/api/people")
+		fetch("http://universities.hipolabs.com/search?name=school")
+			.then(res => res.json())
+			.then(data => {
+				this.setState({ universities: data, isAllDataFetched: true })
+			})
 	}
 
-	fetchPeople = (url) => {
+	fetchPeopleStarWars = (url) => {
 		fetch(url)
 			.then(res => {
 				return res.json()
@@ -38,10 +46,13 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
+			<>
 				<h1>Table with star wars api data used</h1>
-				<Table data={this.state.isAllDataFetched ? this.state.people : "Loading"}/>
-			</div>
+				<Table
+					data={divideDataToChunks(this.state.universities,50)}
+					isAllDataFetched={this.state.isAllDataFetched}
+				/>
+			</>
 		);
 	}
 }
