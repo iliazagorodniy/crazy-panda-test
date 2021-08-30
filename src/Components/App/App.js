@@ -1,7 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Table from "../Table/Table";
 import "./App.css"
-import {divideDataToChunks} from "../helperFunctions";
+import { cleanData } from "../helperFunctions"
+
+const headers = {
+	name: "",
+	gender: "",
+	birth_year: "",
+	height: "",
+	mass: "",
+	skin_color: "",
+	hair_color: "",
+	eye_color: "",
+}
 
 class App extends Component {
 	state = {
@@ -10,12 +21,12 @@ class App extends Component {
 		isAllDataFetched: false
 	}
 	componentDidMount() {
-		// this.fetchPeopleStarWars("https://swapi.dev/api/people")
-		fetch("http://universities.hipolabs.com/search?name=school")
-			.then(res => res.json())
-			.then(data => {
-				this.setState({ universities: data, isAllDataFetched: true })
-			})
+		this.fetchPeopleStarWars("https://swapi.dev/api/people")
+		// fetch("http://universities.hipolabs.com/search?name=school")
+		// 	.then(res => res.json())
+		// 	.then(data => {
+		// 		this.setState({ universities: data, isAllDataFetched: true })
+		// 	})
 	}
 
 	fetchPeopleStarWars = (url) => {
@@ -32,9 +43,9 @@ class App extends Component {
 					}
 				}, () => {
 					if (data.next !== null) {
-						this.fetchPeople(data.next)
+						this.fetchPeopleStarWars(data.next)
 					} else {
-						this.setState({isAllDataFetched: true}, () => console.log(this.state))
+						this.setState({isAllDataFetched: true})
 					}
 				})
 				return data
@@ -48,10 +59,10 @@ class App extends Component {
 		return (
 			<>
 				<h1>Table with star wars api data used</h1>
-				<Table
-					data={divideDataToChunks(this.state.universities,50)}
-					isAllDataFetched={this.state.isAllDataFetched}
-				/>
+				{this.state.isAllDataFetched
+					? <Table data={cleanData(this.state.people, headers)}/>
+					: <h2>Loading Data...</h2>
+				}
 			</>
 		);
 	}
