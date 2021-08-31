@@ -2,27 +2,6 @@
     outline:none;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #606060;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #72B4E6;
-}
-
-input {
-    border: 1px solid #323232;
-    border-radius: 8px;
-    background-color: white;
-    width: 50%;
-    height: 25px;
-    margin: 10px 0;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -43,7 +22,7 @@ th {
 }
 
 th:hover {
-    background-color: #323232;
+    background-color: #EB9073;
 }
 
 button {
@@ -58,23 +37,7 @@ button {
 }
 
 button:hover {
-    background-color: #323232;
-}
-
-.decrement {
     background-color: #EB9073
-}
-
-.increment {
-    background-color: #72B4E6;
-}
-
-.decrement:hover {
-    background-color: #d97f62;
-}
-
-.increment:hover {
-    background-color: #62a5d9;
 }
 
 .unhover {
