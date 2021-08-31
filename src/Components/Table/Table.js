@@ -103,7 +103,7 @@ class Table extends Component {
 
 		return (
 			<>
-				<label htmlFor={"search"} style={{display: "block"}}>Поиск по таблице</label>
+				<label htmlFor={"search"} style={{display: "block"}}>Search in rows</label>
 				<input type="text" name={"search"} id={"search"} value={search} onChange={this.handleSearchChange}/>
 				<div className={"wrapper"}>
 					<table>
@@ -112,7 +112,13 @@ class Table extends Component {
 							<th className={"unhover"}>#</th>
 							{Object.keys(this.state.headers).map(tableHead => {
 								return (
-									<th onClick={() => this.handleSort(tableHead)}>
+									<th
+										onClick={() => this.handleSort(tableHead)}
+										className={this.state.headers[tableHead] === "increment"
+											? "increment"
+											: this.state.headers[tableHead] === "decrement" ? "decrement" : ""
+										}
+									>
 										<div>{tableHead}</div>
 										<div style={{fontWeight: "normal", fontSize: "10px"}}>{headers[tableHead]}</div>
 									</th>
@@ -143,7 +149,17 @@ class Table extends Component {
 				<div style={{display: "flex", justifyContent: "center", marginTop: "10px"}}>
 					{chunkedData.length === 0
 						? "Нет ни одной страницы"
-						: chunkedData.map((item, index) => <button onClick={() => this.setState({tablePage: index})}>{index+1}</button>)}
+						: chunkedData.map((item, index) => {
+							return (
+								<button
+									className={this.state.tablePage === index ? "increment" : ""}
+									onClick={() => this.setState({tablePage: index})}
+								>
+									{index + 1}
+								</button>
+							)
+						})
+					}
 				</div>
 			</>
 		);
